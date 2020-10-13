@@ -80,7 +80,7 @@ namespace ProyectoFinalModulo1
                     }
                     else
                     {
-                        Console.WriteLine("Mal numero");
+                        Console.WriteLine("Numero equivocado");
                     }
                 }
                 else
@@ -90,7 +90,7 @@ namespace ProyectoFinalModulo1
             }
             catch (OverflowException)
             {
-                Console.WriteLine("Has introducido demasiados caracteres en algun campo");
+                Console.WriteLine("Has introducido un numero no valido");
             }
             catch (FormatException)
             {
@@ -180,27 +180,27 @@ namespace ProyectoFinalModulo1
                         Console.WriteLine("Introduce el numero a la izquierda de la pelicula que quieres extender el alquiler");
                         int.TryParse(Console.ReadLine(), out int ext);
                         if (ext > 0 && ext - 1 < PeliculaAlquiladas.Count())
-                            {
-                            Console.WriteLine("Introduce el numero de dias que quieres extender el alquiler");
-                            double dias = Convert.ToUInt32(Console.ReadLine());
-                            if (dias > 30)
-                            {
-                                dias = 30;
-                            }
-                            DateTime.TryParse(PeliculaAlquiladas.ElementAt(ext - 1).FechaLimite, out DateTime date);
-                            if (DateTime.Now.AddDays(31) > date.AddDays(dias))
-                            {
-                                conexion.Open();
-                                cadena = $"UPDATE Alquiler SET FechaLimite='{date.AddDays(dias)}'where FechaDevolucion IS NULL and Email='{email}' and IDPeliculas='{PeliculaAlquiladas.ElementAt(ext - 1).IDPeliculas}'";
-                                comando = new SqlCommand(cadena, conexion);
-                                comando.ExecuteNonQuery();
-                                conexion.Close();
-                            }
-                            else
-                            {
-                                Console.WriteLine("No puedes extender el alquiler por mas de 30 dias");
-                            }
-                            }
+                        {
+                                Console.WriteLine("Introduce el numero de dias que quieres extender el alquiler");
+                                double dias = Convert.ToUInt32(Console.ReadLine());
+                                if (dias > 30)
+                                {
+                                    dias = 30;
+                                }
+                                DateTime.TryParse(PeliculaAlquiladas.ElementAt(ext - 1).FechaLimite, out DateTime date);
+                                if (DateTime.Now.AddDays(31) > date.AddDays(dias))
+                                {
+                                    conexion.Open();
+                                    cadena = $"UPDATE Alquiler SET FechaLimite='{date.AddDays(dias)}'where FechaDevolucion IS NULL and Email='{email}' and IDPeliculas='{PeliculaAlquiladas.ElementAt(ext - 1).IDPeliculas}'";
+                                    comando = new SqlCommand(cadena, conexion);
+                                    comando.ExecuteNonQuery();
+                                    conexion.Close();
+                                }
+                                else
+                                {
+                                    Console.WriteLine("No puedes extender el alquiler por mas de 30 dias");
+                                }
+                        }
                         
                     }
                     else
@@ -212,7 +212,7 @@ namespace ProyectoFinalModulo1
             }
             catch (OverflowException)
             {
-                Console.WriteLine("Has introducido demasiados caracteres en algun campo");
+                Console.WriteLine("Has introducido un numero no valido");
             }
             catch (FormatException)
             {

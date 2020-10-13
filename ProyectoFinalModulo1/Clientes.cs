@@ -194,6 +194,10 @@ namespace ProyectoFinalModulo1
                             comando.ExecuteNonQuery();
                             conexion.Close();
                         }
+                        else
+                        {
+                            Console.WriteLine("Contraseña incorrecta");
+                        }
                     }
                     else if (opcion == "2")
                     {
@@ -212,11 +216,16 @@ namespace ProyectoFinalModulo1
                             conexion.Close();
                             this.FechaDeNacimiento = fecha.ToString();
                         }
+                        else
+                        {
+                            Console.WriteLine("Fecha incorrecta");
+                        }
                     }
                     else if (opcion == "3")
                     {
-                            Console.WriteLine("Introduce tu nombre");
-                            this.Nombre = Console.ReadLine();
+                        Console.WriteLine(this.Nombre + this.Apellido);
+                        Console.WriteLine("Introduce tu nombre");
+                        this.Nombre = Console.ReadLine();
                         if (this.Nombre!="") 
                         {
                             conexion.Open();
@@ -225,12 +234,12 @@ namespace ProyectoFinalModulo1
                             comando.ExecuteNonQuery();
                             conexion.Close();
                         }
-
+                        
                     }
                     else if (opcion == "4")
                     {
-                            Console.WriteLine("Introduce tu apellido");
-                            this.Apellido = Console.ReadLine();
+                        Console.WriteLine("Introduce tu apellido");
+                        this.Apellido = Console.ReadLine();
                         if (this.Apellido!="") 
                         {
                             conexion.Open();
@@ -249,17 +258,17 @@ namespace ProyectoFinalModulo1
             }
             catch (OverflowException)
             {
-                Console.WriteLine("Has introducido demasiados caracteres en algun campo");
+                Console.WriteLine("Has introducido demasiados caracteres en algun campo,no se han guardado los cambios");
                 conexion.Close();
             }
             catch (FormatException)
             {
-                Console.WriteLine("Has introducido un formato equivocado");
+                Console.WriteLine("Has introducido un formato equivocado,no se han guardado los cambios");
                 conexion.Close();
             }
             catch (Exception)
             {
-                Console.WriteLine("Error");
+                Console.WriteLine("Error no se han guardado los cambios");
                 conexion.Close();
 
             }
