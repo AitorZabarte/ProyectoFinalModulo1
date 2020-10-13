@@ -97,29 +97,35 @@ namespace ProyectoFinalModulo1
                         if (this.Contraseña.Length < 36&&this.Contraseña.Length>0)
                         {
                             Console.WriteLine("Introduce tu fecha de nacimiento de esta manera AAAA-MM-DD");
-                            DateTime.TryParse(Console.ReadLine(), out DateTime fecha);
-                            if (fecha < DateTime.Now)
+                            if (DateTime.TryParse(Console.ReadLine(), out DateTime fecha))
                             {
-                                this.FechaDeNacimiento = fecha.ToString();
+                                if (fecha < DateTime.Now)
+                                {
+                                    this.FechaDeNacimiento = fecha.ToString();
+                                }
+                                else
+                                {
+                                    this.FechaDeNacimiento = DateTime.Now.ToString();
+                                }
+                                Console.WriteLine("Si quieres insertar tu nombre y apellidos escribe 'si'");
+                                string aniadir = Console.ReadLine();
+                                if (aniadir.ToLower() == "si")
+                                {
+                                    Console.WriteLine("Introduce tu nombre");
+                                    this.Nombre = Console.ReadLine();
+                                    Console.WriteLine("Introduce tu apellido");
+                                    this.Apellido = Console.ReadLine();
+                                }
+                                conexion.Open();
+                                cadena = $"INSERT INTO Clientes (Email,Nombre,Apellido,FechaDeNacimiento,Contraseña) VALUES ('{this.Email}','{this.Nombre}','{this.Apellido}','{this.FechaDeNacimiento}','{this.Contraseña}')";
+                                comando = new SqlCommand(cadena, conexion);
+                                comando.ExecuteNonQuery();
+                                conexion.Close();
                             }
                             else
                             {
-                                this.FechaDeNacimiento = DateTime.Now.ToString();
+                                Console.WriteLine("Fecha incorrecta");
                             }
-                            Console.WriteLine("Si quieres insertar tu nombre y apellidos escribe 'si'");
-                            string aniadir = Console.ReadLine();
-                            if (aniadir.ToLower() == "si")
-                            {
-                                Console.WriteLine("Introduce tu nombre");
-                                this.Nombre = Console.ReadLine();
-                                Console.WriteLine("Introduce tu apellido");
-                                this.Apellido = Console.ReadLine();
-                            }
-                            conexion.Open();
-                            cadena = $"INSERT INTO Clientes (Email,Nombre,Apellido,FechaDeNacimiento,Contraseña) VALUES ('{this.Email}','{this.Nombre}','{this.Apellido}','{this.FechaDeNacimiento}','{this.Contraseña}')";
-                            comando = new SqlCommand(cadena, conexion);
-                            comando.ExecuteNonQuery();
-                            conexion.Close();
                         }
                         else
                         {
@@ -173,7 +179,7 @@ namespace ProyectoFinalModulo1
             try
             {
                 string opcion = "";
-                Console.WriteLine("1.Cambiar la contraseña\n2.Cambiar fecha de nacimiento\n3.Cambiar Nombre\n4.Cambiar Apellido");
+                Console.WriteLine("1.Cambiar la Contraseña\n2.Cambiar Fecha de Nacimiento\n3.Cambiar Nombre\n4.Cambiar Apellido");
                 opcion=Console.ReadLine();
                 {
                     if (opcion == "1")
@@ -192,19 +198,20 @@ namespace ProyectoFinalModulo1
                     else if (opcion == "2")
                     {
                         Console.WriteLine("Introduce tu fecha de nacimiento de esta manera AAAA-MM-DD");
-                        DateTime.TryParse(Console.ReadLine(), out DateTime fecha);
-                        if (fecha > DateTime.Now)
+                        if (DateTime.TryParse(Console.ReadLine(), out DateTime fecha))
                         {
-                            this.FechaDeNacimiento = DateTime.Now.ToString();
-                        }
-                        
-                        conexion.Open();
-                        cadena = $"UPDATE Clientes SET FechaDeNacimiento='{fecha}'where Email='{this.Email}'";
-                        comando = new SqlCommand(cadena, conexion);
-                        comando.ExecuteNonQuery();
-                        conexion.Close();
-                        this.FechaDeNacimiento = fecha.ToString();
+                            if (fecha > DateTime.Now)
+                            {
+                                this.FechaDeNacimiento = DateTime.Now.ToString();
+                            }
 
+                            conexion.Open();
+                            cadena = $"UPDATE Clientes SET FechaDeNacimiento='{fecha}'where Email='{this.Email}'";
+                            comando = new SqlCommand(cadena, conexion);
+                            comando.ExecuteNonQuery();
+                            conexion.Close();
+                            this.FechaDeNacimiento = fecha.ToString();
+                        }
                     }
                     else if (opcion == "3")
                     {

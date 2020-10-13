@@ -47,7 +47,7 @@ namespace ProyectoFinalModulo1
                 {
                     if (p.Estado == "disponible")
                     {
-                        Console.WriteLine(i + ")-" + p.Titulo);
+                        Console.WriteLine(i +")- " + p.Titulo);
                         i++;
                         ListPelAlq.Add(p);
                     }
@@ -61,9 +61,11 @@ namespace ProyectoFinalModulo1
                     {
 
                         Console.WriteLine("Introduce el numero de dias que quieres alquilarlo");
-                        double dias = Convert.ToInt32(Console.ReadLine());
-                        DateTime myDateTime = DateTime.Now.AddDays(dias);
-                        string sqlFormattedDate = myDateTime.ToString("yyyy-MM-dd");
+                        double dias = Convert.ToUInt32(Console.ReadLine());
+                        if (dias > 30)
+                        {
+                            dias = 30;
+                        }
                         conexion.Open();
                         cadena = $"INSERT INTO Alquiler (IDPeliculas,Email,FechaAlquilado,FechaLimite) VALUES('{ListPelAlq.ElementAt(numPel - 1).ID}','{email}','{DateTime.Now}','{DateTime.Now.AddDays(dias)}')";
                         comando = new SqlCommand(cadena, conexion);
@@ -153,7 +155,7 @@ namespace ProyectoFinalModulo1
                 }
                 if (PeliculaAlquiladas.Count() > 0)
                 {
-                    Console.WriteLine("Si quieres devolver una pelicula introduce '1' si no introduce otro caracter");
+                    Console.WriteLine("Introduce una de estas opciones:\n1.-Devolver pelicula\n2.-Extender alquiler");
                     string devo = Console.ReadLine();
                     if (devo == "1")
                     {
@@ -172,6 +174,38 @@ namespace ProyectoFinalModulo1
                             comando.ExecuteNonQuery();
                             conexion.Close();
                         }
+                    }
+                    else if (devo == "2")
+                    {
+                        Console.WriteLine("Introduce el numero a la izquierda de la pelicula que quieres extender el alquiler");
+                        int.TryParse(Console.ReadLine(), out int ext);
+                        if (ext > 0 && ext - 1 < PeliculaAlquiladas.Count())
+                            {
+                            Console.WriteLine("Introduce el numero de dias que quieres extender el alquiler");
+                            double dias = Convert.ToUInt32(Console.ReadLine());
+                            if (dias > 30)
+                            {
+                                dias = 30;
+                            }
+                            DateTime.TryParse(PeliculaAlquiladas.ElementAt(ext - 1).FechaLimite, out DateTime date);
+                            if (DateTime.Now.AddDays(31) > date.AddDays(dias))
+                            {
+                                conexion.Open();
+                                cadena = $"UPDATE Alquiler SET FechaLimite='{date.AddDays(dias)}'where FechaDevolucion IS NULL and Email='{email}' and IDPeliculas='{PeliculaAlquiladas.ElementAt(ext - 1).IDPeliculas}'";
+                                comando = new SqlCommand(cadena, conexion);
+                                comando.ExecuteNonQuery();
+                                conexion.Close();
+                            }
+                            else
+                            {
+                                Console.WriteLine("No puedes extender el alquiler por mas de 30 dias");
+                            }
+                            }
+                        
+                    }
+                    else
+                    {
+                        Console.WriteLine("Opcion incorrecta");
                     }
                 }
                 else Console.WriteLine("No tienes peliculas alquiladas");

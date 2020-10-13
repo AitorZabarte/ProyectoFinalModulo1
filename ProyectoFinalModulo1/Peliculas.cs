@@ -72,8 +72,8 @@ namespace ProyectoFinalModulo1
                 int numPel = Convert.ToInt32(Console.ReadLine());
                 if (numPel <= ListPelicula.Count && numPel > 0)
                 {
-                    Console.WriteLine($"{ListPelicula.ElementAt(numPel - 1).Titulo}\t\t{ListPelicula.ElementAt(numPel - 1).EdadRecomendada}\n\n" +
-                        $"{ListPelicula.ElementAt(numPel - 1).Sinopsis}");
+                    Console.WriteLine($"Titulo: {ListPelicula.ElementAt(numPel - 1).Titulo}\tEdad Recomendada: {ListPelicula.ElementAt(numPel - 1).EdadRecomendada}\nSinopsis:" +
+                        $"\n {ListPelicula.ElementAt(numPel - 1).Sinopsis}\n");
                 }
                 else
                 {

@@ -54,11 +54,10 @@ namespace ProyectoFinalModulo1
                                     Console.Clear();
                                     break;
                                 default:
+                                    Console.Clear();
                                     Console.WriteLine("Opcion incorrecta\n");
                                     break;                                       
                             }
-                        
-
                         } while (opcionMenu != "5");
                     }
                     else
@@ -73,7 +72,7 @@ namespace ProyectoFinalModulo1
                 }
                 else if (opcion == "3")
                 {
-                    Console.WriteLine("Gracias");
+                    Console.WriteLine("Gracias,hasta pronto");
                 }
                 else
                 {
