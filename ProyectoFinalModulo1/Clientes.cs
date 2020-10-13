@@ -78,8 +78,7 @@ namespace ProyectoFinalModulo1
                 bool emailRegistrado = false;
                 Console.WriteLine("Introduce tu E-mail");
                 this.Email = Console.ReadLine();
-
-                if (this.Email.Contains("@") &&( (this.Email.Contains(".com") || this.Email.Contains(".es"))))
+                if (this.Email.Contains("@") &&( (this.Email.EndsWith(".com") || this.Email.EndsWith(".es"))))
                 {
                     conexion.Open();
                     cadena = $"SELECT Email from Clientes where Email='{this.Email}'";
@@ -93,9 +92,9 @@ namespace ProyectoFinalModulo1
                     conexion.Close();
                     if (emailRegistrado != true)
                     {
-                        Console.WriteLine("E-mail correcto ahora introduce tu contraseña, como maximo 20 caracteres");
+                        Console.WriteLine("E-mail correcto ahora introduce tu contraseña, como maximo 35 caracteres");
                         this.Contraseña = Console.ReadLine();
-                        if (this.Contraseña.Length < 21&&this.Contraseña.Length>0)
+                        if (this.Contraseña.Length < 36&&this.Contraseña.Length>0)
                         {
                             Console.WriteLine("Introduce tu fecha de nacimiento de esta manera AAAA-MM-DD");
                             DateTime.TryParse(Console.ReadLine(), out DateTime fecha);
@@ -179,9 +178,9 @@ namespace ProyectoFinalModulo1
                 {
                     if (opcion == "1")
                     {
-                        Console.WriteLine("Introduce tu contraseña, como maximo 20 caracteres");
+                        Console.WriteLine("Introduce tu contraseña, como maximo 35 caracteres");
                         this.Contraseña = Console.ReadLine();
-                        if (this.Contraseña.Length < 21 && this.Contraseña.Length > 0)
+                        if (this.Contraseña.Length < 36 && this.Contraseña.Length > 0)
                         {
                             conexion.Open();
                             cadena = $"UPDATE Clientes SET Contraseña='{this.Contraseña}' where Email='{this.Email}'";
@@ -192,35 +191,47 @@ namespace ProyectoFinalModulo1
                     }
                     else if (opcion == "2")
                     {
-                            Console.WriteLine("Introduce tu fecha de nacimiento de esta manera AAAA-MM-DD");
-                            this.FechaDeNacimiento =Console.ReadLine();
-                            conexion.Open();
-                            cadena = $"UPDATE Clientes SET FechaDeNacimiento='{this.FechaDeNacimiento}'where Email='{this.Email}'";
-                            comando = new SqlCommand(cadena, conexion);
-                            comando.ExecuteNonQuery();
-                            conexion.Close();
+                        Console.WriteLine("Introduce tu fecha de nacimiento de esta manera AAAA-MM-DD");
+                        DateTime.TryParse(Console.ReadLine(), out DateTime fecha);
+                        if (fecha > DateTime.Now)
+                        {
+                            this.FechaDeNacimiento = DateTime.Now.ToString();
+                        }
+                        
+                        conexion.Open();
+                        cadena = $"UPDATE Clientes SET FechaDeNacimiento='{fecha}'where Email='{this.Email}'";
+                        comando = new SqlCommand(cadena, conexion);
+                        comando.ExecuteNonQuery();
+                        conexion.Close();
+                        this.FechaDeNacimiento = fecha.ToString();
 
                     }
                     else if (opcion == "3")
                     {
                             Console.WriteLine("Introduce tu nombre");
                             this.Nombre = Console.ReadLine();
+                        if (this.Nombre!="") 
+                        {
                             conexion.Open();
                             cadena = $"UPDATE Clientes SET Nombre='{this.Nombre}'where Email='{this.Email}'";
                             comando = new SqlCommand(cadena, conexion);
                             comando.ExecuteNonQuery();
                             conexion.Close();
+                        }
 
                     }
                     else if (opcion == "4")
                     {
                             Console.WriteLine("Introduce tu apellido");
                             this.Apellido = Console.ReadLine();
+                        if (this.Apellido!="") 
+                        {
                             conexion.Open();
                             cadena = $"UPDATE Clientes SET Apellido='{this.Apellido}'where Email='{this.Email}'";
                             comando = new SqlCommand(cadena, conexion);
                             comando.ExecuteNonQuery();
                             conexion.Close();
+                        }
                     }
 
                     else

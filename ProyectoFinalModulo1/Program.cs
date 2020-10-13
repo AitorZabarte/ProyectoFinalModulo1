@@ -22,7 +22,7 @@ namespace ProyectoFinalModulo1
                 Clientes cliente = new Clientes();
                 Alquiler alquiler = new Alquiler();
                 Console.WriteLine("Hola! Bienvenido a nuestro videclub.\n1.-Log in\n2.-Registrarse\n3.-Salir");
-                    opcion = Console.ReadLine();
+                opcion = Console.ReadLine();
                 if (opcion == "1")
                 {
 
