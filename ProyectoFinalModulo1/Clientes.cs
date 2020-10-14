@@ -159,9 +159,20 @@ namespace ProyectoFinalModulo1
         {
             try
             {
-                if (DateTime.Today.Day > Convert.ToDateTime(this.FechaDeNacimiento).Day && DateTime.Today.Month > Convert.ToDateTime(this.FechaDeNacimiento).Month)
+                if (DateTime.Today.Month < Convert.ToDateTime(this.FechaDeNacimiento).Month)
                 {
                     return DateTime.Today.Year - Convert.ToDateTime(this.FechaDeNacimiento).Year - 1;
+                }
+                else if(DateTime.Today.Month == Convert.ToDateTime(this.FechaDeNacimiento).Month)
+                {
+                    if (DateTime.Today.Day < Convert.ToDateTime(this.FechaDeNacimiento).Day)
+                    {
+                        return DateTime.Today.Year - Convert.ToDateTime(this.FechaDeNacimiento).Year - 1;
+                    }
+                    else
+                    {
+                        return (DateTime.Today.Year - Convert.ToDateTime(this.FechaDeNacimiento).Year);
+                    }
                 }
                 else
                 {
